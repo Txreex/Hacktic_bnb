@@ -1,142 +1,42 @@
-// signup.js
 document.addEventListener("DOMContentLoaded", () => {
+  const supabaseUrl = "https://YOUR_SUPABASE_URL";
+  const supabaseAnonKey = "YOUR_SUPABASE_ANON_KEY";
+  const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
+
   const form = document.getElementById("signupForm");
-  const fullName = document.getElementById("fullName");
-  const email = document.getElementById("email");
-  const password = document.getElementById("password");
-  const confirmPassword = document.getElementById("confirmPassword");
-  const userType = document.getElementById("userType");
-  const terms = document.getElementById("terms");
+  const fullNameInput = document.getElementById("fullName");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const confirmPasswordInput = document.getElementById("confirmPassword");
+  const message = document.getElementById("message");
 
-  const strengthBar = document.getElementById("strengthBar");
-  const strengthText = document.getElementById("strengthText");
-
-  // Utility: show error
-  function setError(input, message) {
-    const group = input.closest(".form-group");
-    group.classList.add("error");
-    group.classList.remove("success");
-    group.querySelector(".error-message").textContent = message;
-  }
-
-  // Utility: show success
-  function setSuccess(input) {
-    const group = input.closest(".form-group");
-    group.classList.remove("error");
-    group.classList.add("success");
-  }
-
-  // Password strength checker
-  function checkPasswordStrength(pwd) {
-    let strength = 0;
-    if (pwd.length >= 8) strength++;
-    if (/[A-Z]/.test(pwd)) strength++;
-    if (/[0-9]/.test(pwd)) strength++;
-    if (/[^A-Za-z0-9]/.test(pwd)) strength++;
-
-    strengthBar.className = "strength-bar"; // reset
-
-    switch (strength) {
-      case 0:
-      case 1:
-        strengthBar.classList.add("weak");
-        strengthText.textContent = "Weak";
-        break;
-      case 2:
-        strengthBar.classList.add("fair");
-        strengthText.textContent = "Fair";
-        break;
-      case 3:
-        strengthBar.classList.add("good");
-        strengthText.textContent = "Good";
-        break;
-      case 4:
-        strengthBar.classList.add("strong");
-        strengthText.textContent = "Strong";
-        break;
-    }
-  }
-
-  password.addEventListener("input", (e) => {
-    checkPasswordStrength(e.target.value);
-  });
-
-  // Toggle password visibility
-  window.togglePassword = function (id) {
-    const input = document.getElementById(id);
-    input.type = input.type === "password" ? "text" : "password";
-  };
-
-  // Validate email
-  function isValidEmail(mail) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
-  }
-
-  // Submit handler
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
-    let isValid = true;
+    message.textContent = "";
 
-    if (fullName.value.trim() === "") {
-      setError(fullName, "Please enter your full name");
-      isValid = false;
+    if (passwordInput.value !== confirmPasswordInput.value) {
+      message.textContent = "Passwords do not match!";
+      message.style.color = "red";
+      return;
+    }
+
+    message.textContent = "Creating account...";
+    const { data, error } = await supabase.auth.signUp({
+      email: emailInput.value,
+      password: passwordInput.value
+    });
+
+    if (error) {
+      message.textContent = `Error: ${error.message}`;
+      message.style.color = "red";
     } else {
-      setSuccess(fullName);
-    }
+      message.textContent = "Sign up successful! Please check your email to confirm.";
+      message.style.color = "green";
 
-    if (!isValidEmail(email.value.trim())) {
-      setError(email, "Please enter a valid email address");
-      isValid = false;
-    } else {
-      setSuccess(email);
-    }
-
-    if (password.value.length < 8) {
-      setError(password, "Password must be at least 8 characters");
-      isValid = false;
-    } else {
-      setSuccess(password);
-    }
-
-    if (confirmPassword.value !== password.value || confirmPassword.value === "") {
-      setError(confirmPassword, "Passwords do not match");
-      isValid = false;
-    } else {
-      setSuccess(confirmPassword);
-    }
-
-    if (userType.value === "") {
-      setError(userType, "Please select your role");
-      isValid = false;
-    } else {
-      setSuccess(userType);
-    }
-
-    if (!terms.checked) {
-      alert("You must agree to the Terms of Service and Privacy Policy");
-      isValid = false;
-    }
-
-    if (isValid) {
-      // Save user to localStorage (demo only)
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const exists = users.find((u) => u.email === email.value.trim());
-      if (exists) {
-        alert("User with this email already exists!");
-        return;
-      }
-
-      users.push({
-        name: fullName.value.trim(),
-        email: email.value.trim(),
-        password: password.value, // In real apps, NEVER store plain password!
-        role: userType.value,
-      });
-
-      localStorage.setItem("users", JSON.stringify(users));
-
-      alert("Signup successful! Redirecting to login...");
-      window.location.href = "login.html";
+      // Optionally create a profile in the 'profiles' table
+      await supabase.from("profiles").insert([
+        { id: data.user.id, name: fullNameInput.value }
+      ]);
     }
   });
 });

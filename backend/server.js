@@ -14,7 +14,53 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // Supabase client
-const supabase = createClient("https://ebtwbgbkvimfdvolbyaa.supabase.co","eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVidHdiZ2JrdmltZmR2b2xieWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxNjczNjUsImV4cCI6MjA3Mjc0MzM2NX0.WW_LpmgYwYbY2gt8deNifqxsKmylfhMzlroKlvZY4lU");
+const supabase = createClient(
+  "https://ebtwbgbkvimfdvolbyaa.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVidHdiZ2JrdmltZmR2b2xieWFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTcxNjczNjUsImV4cCI6MjA3Mjc0MzM2NX0.WW_LpmgYwYbY2gt8deNifqxsKmylfhMzlroKlvZY4lU"
+);
+
+/* ================================
+   AUTHENTICATION
+   ================================ */
+
+// Signup
+app.post("/api/signup", async (req, res) => {
+  const { email, password, role, name } = req.body;
+
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { role, name }
+      }
+    });
+
+    if (error) throw error;
+
+    res.json({ user: data.user, message: "Signup successful" });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
+
+// Login
+app.post("/api/login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) throw error;
+
+    res.json({ session: data.session, user: data.user });
+  } catch (err) {
+    res.status(401).json({ error: "Invalid email or password" });
+  }
+});
 
 /* ================================
    PROFILES

@@ -1,156 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - EduHub</title>
-    <link rel="stylesheet" href="./css/signup.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - EduHub</title>
+  <link rel="stylesheet" href="./css/signup.css">
 </head>
 <body>
-    <div class="signup-container">
-        <!-- Background Pattern -->
-        <div class="bg-pattern"></div>
-        
-        <!-- Signup Card -->
-        <div class="signup-card">
-            <div class="signup-header">
-                <div class="logo">H a c t i c</div>
-                <h1>Create Account</h1>     
-                <p>Join our community of learners and educators</p>
-            </div>
+  <div class="signup-container">
+    <form id="signupForm">
+      <h2>Sign Up</h2>
+      <input type="text" id="fullName" placeholder="Full Name" required>
+      <input type="email" id="email" placeholder="Email" required>
+      <input type="password" id="password" placeholder="Password" required>
+      <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+      <button type="submit">Sign Up</button>
+      <p id="message"></p>
+    </form>
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
 
-            <form class="signup-form" id="signupForm">
-                <div class="form-group">
-                    <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
-                    <div class="error-message">Please enter your full name</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="Enter your email address" required>
-                    <div class="error-message">Please enter a valid email address</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="password-input">
-                        <input type="password" id="password" name="password" placeholder="Create a strong password" required>
-                        <button type="button" class="toggle-password" onclick="togglePassword('password')">
-                            <span id="eye-icon">👁️</span>
-                        </button>
-                    </div>
-                    <div class="password-strength">
-                        <div class="strength-meter">
-                            <div class="strength-bar" id="strengthBar"></div>
-                        </div>
-                        <span class="strength-text" id="strengthText">Password strength</span>
-                    </div>
-                    <div class="error-message">Password must be at least 8 characters</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <div class="password-input">
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
-                        <button type="button" class="toggle-password" onclick="togglePassword('confirmPassword')">
-                            <span id="eye-icon-confirm">👁️</span>
-                        </button>
-                    </div>
-                    <div class="error-message">Passwords do not match</div>
-                </div>
-
-                <div class="form-group">
-                    <label for="userType">I am a</label>
-                    <select id="userType" name="userType" required>
-                        <option value="">Select your role</option>
-                        <option value="student">Student</option>
-                        <option value="teacher">Teacher</option>
-                    </select>
-                    <div class="error-message">Please select your role</div>
-                </div>
-
-                <div class="form-options">
-                    <label class="checkbox-wrapper">
-                        <input type="checkbox" id="terms" required>
-                        <span class="checkmark"></span>
-                        I agree to the <a href="#" class="link">Terms of Service</a> and <a href="#" class="link">Privacy Policy</a>
-                    </label>
-                </div>
-
-                <div class="form-options">
-                    <label class="checkbox-wrapper">
-                        <input type="checkbox" id="newsletter">
-                        <span class="checkmark"></span>
-                        Subscribe to newsletter for updates and offers
-                    </label>
-                </div>
-
-                <button type="submit" class="signup-btn">
-                    <span class="btn-text">Create Account</span>
-                    <div class="btn-loader"></div>
-                </button>
-
-                <div class="divider">
-                    <span>or</span>
-                </div>
-
-                <div class="social-signup">
-                    <button type="button" class="social-btn google-btn">
-                        <span class="social-icon">G</span>
-                        Sign up with Google
-                    </button>
-                    <button type="button" class="social-btn github-btn">
-                        <span class="social-icon">⚡</span>
-                        Sign up with GitHub
-                    </button>
-                </div>
-            </form>
-
-            <div class="signup-footer">
-                <p>Already have an account? <a href="login.html">Sign in</a></p>
-            </div>
-        </div>
-
-        <!-- Side Panel -->
-        <div class="side-panel">
-            <div class="side-content">
-                <h2>Join Our Learning Community</h2>
-                <h2>- - - - - - </h2>
-                <h2>H a c t i c</h2>
-                <p>Connect with passionate educators and eager learners from around the world.</p>
-                <div class="features-list">
-                    <div class="feature-item">
-                        <span class="feature-icon">🚀</span>
-                        <span>Launch your teaching career</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">💡</span>
-                        <span>Learn new skills daily</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">🌍</span>
-                        <span>Global learning network</span>
-                    </div>
-                    <div class="feature-item">
-                        <span class="feature-icon">📈</span>
-                        <span>Track your progress</span>
-                    </div>
-                </div>
-
-                <div class="testimonial">
-                    <p>"EduHub transformed my teaching experience. The platform is intuitive and the community is incredibly supportive."</p>
-                    <div class="testimonial-author">
-                        <strong>Sarah Chen</strong>
-                        <span>Computer Science Teacher</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
-    <script src="./js/auth.js"></script>
-    <script src="./js/signup.js"></script>
+  <script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+  <script src="./js/signup.js"></script>
 </body>
 </html>
