@@ -1,0 +1,1 @@
+initiatiing UI / UX and discussing about the Design 
