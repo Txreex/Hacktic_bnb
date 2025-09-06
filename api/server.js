@@ -268,3 +268,34 @@ app.delete("/api/reviews/:id", async (req, res) => {
 app.listen(port, () => {
   console.log(`API server running on port ${port}`);
 });
+
+
+
+
+// Search courses by query (title or description) and include educator info
+app.get("/api/search-courses", async (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+    return res.status(400).json({ error: "Query parameter is required" });
+  }
+
+  try {
+    const { data, error } = await supabase
+      .from("courses")
+      .select(`
+        id,
+        title,
+        description,
+        educator_id,
+        profiles (id, name, email, role)
+      `)
+      .or(`title.ilike.%${query}%,description.ilike.%${query}%`);
+
+    if (error) throw error;
+
+    res.json(data);
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+});
