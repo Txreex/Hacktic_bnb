@@ -11,6 +11,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const strengthBar = document.getElementById("strengthBar");
   const strengthText = document.getElementById("strengthText");
 
+  const API_BASE = "http://localhost:3000/api"; // 👈 Change to your deployed Vercel URL
+
   // Utility: show error
   function setError(input, message) {
     const group = input.closest(".form-group");
@@ -73,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Submit handler
-  form.addEventListener("submit", (e) => {
+  form.addEventListener("submit", async (e) => {
     e.preventDefault();
     let isValid = true;
 
@@ -118,25 +120,29 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (isValid) {
-      // Save user to localStorage (demo only)
-      const users = JSON.parse(localStorage.getItem("users")) || [];
-      const exists = users.find((u) => u.email === email.value.trim());
-      if (exists) {
-        alert("User with this email already exists!");
-        return;
+      try {
+        const res = await fetch(`${API_BASE}/signup`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: email.value.trim(),
+            password: password.value,
+            role: userType.value,
+            name: fullName.value.trim(),
+          }),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Signup failed");
+        }
+
+        alert("Signup successful! Redirecting to login...");
+        window.location.href = "login.html";
+      } catch (err) {
+        alert(`Signup error: ${err.message}`);
       }
-
-      users.push({
-        name: fullName.value.trim(),
-        email: email.value.trim(),
-        password: password.value, // In real apps, NEVER store plain password!
-        role: userType.value,
-      });
-
-      localStorage.setItem("users", JSON.stringify(users));
-
-      alert("Signup successful! Redirecting to login...");
-      window.location.href = "login.html";
     }
   });
 });

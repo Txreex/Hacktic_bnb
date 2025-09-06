@@ -3,11 +3,11 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import { createClient } from "@supabase/supabase-js";
-import serverless from "serverless-http";
 
 dotenv.config();
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 // Middleware
 app.use(cors());
@@ -22,31 +22,42 @@ const supabase = createClient(
 /* ================================
    AUTHENTICATION
    ================================ */
+
+// Signup
 app.post("/api/signup", async (req, res) => {
   const { email, password, role, name } = req.body;
+
   try {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { role, name } },
+      options: {
+        data: { role, name }
+      }
     });
+
     if (error) throw error;
+
     res.json({ user: data.user, message: "Signup successful" });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
 
+// Login
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
+
   try {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
-      password,
+      password
     });
+
     if (error) throw error;
+
     res.json({ session: data.session, user: data.user });
-  } catch {
+  } catch (err) {
     res.status(401).json({ error: "Invalid email or password" });
   }
 });
@@ -54,6 +65,8 @@ app.post("/api/login", async (req, res) => {
 /* ================================
    PROFILES
    ================================ */
+
+// Add profile
 app.post("/api/profiles", async (req, res) => {
   const { id, role, name, email, bio } = req.body;
   try {
@@ -68,12 +81,14 @@ app.post("/api/profiles", async (req, res) => {
   }
 });
 
+// Get profile by id
 app.get("/api/profiles/:id", async (req, res) => {
+  const { id } = req.params;
   try {
     const { data, error } = await supabase
       .from("profiles")
       .select("*")
-      .eq("id", req.params.id)
+      .eq("id", id)
       .single();
     if (error) throw error;
     res.json(data);
@@ -82,9 +97,11 @@ app.get("/api/profiles/:id", async (req, res) => {
   }
 });
 
+// Delete profile
 app.delete("/api/profiles/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const { error } = await supabase.from("profiles").delete().eq("id", req.params.id);
+    const { error } = await supabase.from("profiles").delete().eq("id", id);
     if (error) throw error;
     res.json({ success: true });
   } catch (err) {
@@ -95,6 +112,8 @@ app.delete("/api/profiles/:id", async (req, res) => {
 /* ================================
    COURSES
    ================================ */
+
+// Add course
 app.post("/api/courses", async (req, res) => {
   const { title, description, educatorId } = req.body;
   try {
@@ -109,6 +128,7 @@ app.post("/api/courses", async (req, res) => {
   }
 });
 
+// Get all courses
 app.get("/api/courses", async (req, res) => {
   try {
     const { data, error } = await supabase.from("courses").select("*");
@@ -119,9 +139,11 @@ app.get("/api/courses", async (req, res) => {
   }
 });
 
+// Delete course
 app.delete("/api/courses/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const { error } = await supabase.from("courses").delete().eq("id", req.params.id);
+    const { error } = await supabase.from("courses").delete().eq("id", id);
     if (error) throw error;
     res.json({ success: true });
   } catch (err) {
@@ -132,6 +154,8 @@ app.delete("/api/courses/:id", async (req, res) => {
 /* ================================
    ENROLLMENTS
    ================================ */
+
+// Enroll student
 app.post("/api/enrollments", async (req, res) => {
   const { studentId, courseId } = req.body;
   try {
@@ -146,12 +170,14 @@ app.post("/api/enrollments", async (req, res) => {
   }
 });
 
+// Get student enrollments
 app.get("/api/enrollments/:studentId", async (req, res) => {
+  const { studentId } = req.params;
   try {
     const { data, error } = await supabase
       .from("enrollments")
       .select("*, courses(title, description)")
-      .eq("student_id", req.params.studentId);
+      .eq("student_id", studentId);
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -159,9 +185,11 @@ app.get("/api/enrollments/:studentId", async (req, res) => {
   }
 });
 
+// Remove enrollment
 app.delete("/api/enrollments/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const { error } = await supabase.from("enrollments").delete().eq("id", req.params.id);
+    const { error } = await supabase.from("enrollments").delete().eq("id", id);
     if (error) throw error;
     res.json({ success: true });
   } catch (err) {
@@ -172,6 +200,8 @@ app.delete("/api/enrollments/:id", async (req, res) => {
 /* ================================
    REVIEWS
    ================================ */
+
+// Add review
 app.post("/api/reviews", async (req, res) => {
   const { courseId, studentId, rating, comment } = req.body;
   try {
@@ -186,12 +216,14 @@ app.post("/api/reviews", async (req, res) => {
   }
 });
 
+// Get course reviews
 app.get("/api/reviews/:courseId", async (req, res) => {
+  const { courseId } = req.params;
   try {
     const { data, error } = await supabase
       .from("reviews")
       .select("rating, comment, student_id")
-      .eq("course_id", req.params.courseId);
+      .eq("course_id", courseId);
     if (error) throw error;
     res.json(data);
   } catch (err) {
@@ -199,9 +231,11 @@ app.get("/api/reviews/:courseId", async (req, res) => {
   }
 });
 
+// Delete review
 app.delete("/api/reviews/:id", async (req, res) => {
+  const { id } = req.params;
   try {
-    const { error } = await supabase.from("reviews").delete().eq("id", req.params.id);
+    const { error } = await supabase.from("reviews").delete().eq("id", id);
     if (error) throw error;
     res.json({ success: true });
   } catch (err) {
@@ -210,6 +244,9 @@ app.delete("/api/reviews/:id", async (req, res) => {
 });
 
 /* ================================
-   Export for Vercel
+   Start server
    ================================ */
-export default serverless(app);
+
+app.listen(port, () => {
+  console.log(`API server running on port ${port}`);
+});

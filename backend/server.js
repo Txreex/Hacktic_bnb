@@ -24,10 +24,12 @@ const supabase = createClient(
    ================================ */
 
 // Signup
+// Signup
 app.post("/api/signup", async (req, res) => {
   const { email, password, role, name } = req.body;
 
   try {
+    // Step 1: Create user in Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
@@ -38,11 +40,21 @@ app.post("/api/signup", async (req, res) => {
 
     if (error) throw error;
 
-    res.json({ user: data.user, message: "Signup successful" });
+    const user = data.user;
+
+    // Step 2: Insert into profiles table
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .insert([{ id: user.id, email, name, role }]);
+
+    if (profileError) throw profileError;
+
+    res.json({ user, message: "Signup successful + profile created" });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
 
 // Login
 app.post("/api/login", async (req, res) => {
