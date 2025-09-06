@@ -1,48 +1,43 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const searchInput = document.getElementById('courseSearch');
+const inputBar = document.getElementById('courseSearch');
+const divPush = document.getElementById('courseResults');
 
-    // Search when Enter is pressed
-    searchInput.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            searchCourses();
-        }
-    });
-
-    // Optional: load all courses initially
-    searchCourses('');
-});
-
-async function searchCourses(query = '') {
-    query = query || document.getElementById('courseSearch').value.trim();
-
+const getCourses = async (query = "python") => {
     try {
-        const response = await fetch(`http://localhost:3000/api/search-courses?query=${encodeURIComponent(query)}`);
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-        const courses = await response.json();
+        const res = await fetch(`http://localhost:3000/api/search-courses?query=${query}`);
+        if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
 
-        const courseResults = document.getElementById('courseResults');
-        courseResults.innerHTML = ''; // clear previous results
+        const courses = await res.json();
+        console.log(courses);
 
-        if (!courses || courses.length === 0) {
-            courseResults.innerHTML = '<p>No courses found.</p>';
-            return;
-        }
+        // Clear previous results
+        divPush.innerHTML = '';
 
+        // Loop through courses and append to div
         courses.forEach(course => {
-            const card = document.createElement('div');
-            card.className = 'course-card';
-            card.innerHTML = `
+            const courseCard = document.createElement('div');
+            courseCard.className = 'course-card';
+            courseCard.innerHTML = `
                 <div class="course-info">
                     <h3 class="course-title">${course.title}</h3>
-                    <p class="course-instructor">By ${course.profiles?.name || 'Unknown'}</p>
+                    <p class="course-instructor">By ${course.instructor}</p>
                     <p class="course-description">${course.description}</p>
                     <button class="course-btn">View Course</button>
                 </div>
             `;
-            courseResults.appendChild(card);
+            divPush.appendChild(courseCard);
         });
 
     } catch (err) {
-        console.error('Failed to fetch search results:', err);
+        console.error("Fetch error:", err);
     }
-}
+};
+
+// Call getCourses whenever the input changes
+inputBar.addEventListener('input', (e) => {
+    const query = e.target.value.trim();
+    if (query.length > 0) {
+        getCourses(query);
+    } else {
+        divPush.innerHTML = ''; // clear results if input is empty
+    }
+});
