@@ -1,4 +1,3 @@
-// signup.js
 document.addEventListener("DOMContentLoaded", () => {
   const form = document.getElementById("signupForm");
   const fullName = document.getElementById("fullName");
@@ -11,7 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const strengthBar = document.getElementById("strengthBar");
   const strengthText = document.getElementById("strengthText");
 
-  const API_BASE = "http://localhost:3000/api"; // 👈 Change to your deployed Vercel URL
+  // Use local API
+  const API_BASE = "http://localhost:3000/api";
 
   // Utility: show error
   function setError(input, message) {
@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
     group.classList.add("success");
   }
 
-  // Password strength checker
   function checkPasswordStrength(pwd) {
     let strength = 0;
     if (pwd.length >= 8) strength++;
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (/[0-9]/.test(pwd)) strength++;
     if (/[^A-Za-z0-9]/.test(pwd)) strength++;
 
-    strengthBar.className = "strength-bar"; // reset
+    strengthBar.className = "strength-bar";
 
     switch (strength) {
       case 0:
@@ -59,22 +58,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  password.addEventListener("input", (e) => {
-    checkPasswordStrength(e.target.value);
-  });
+  password.addEventListener("input", (e) => checkPasswordStrength(e.target.value));
 
-  // Toggle password visibility
   window.togglePassword = function (id) {
     const input = document.getElementById(id);
     input.type = input.type === "password" ? "text" : "password";
   };
 
-  // Validate email
   function isValidEmail(mail) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
   }
 
-  // Submit handler
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     let isValid = true;
@@ -82,67 +76,55 @@ document.addEventListener("DOMContentLoaded", () => {
     if (fullName.value.trim() === "") {
       setError(fullName, "Please enter your full name");
       isValid = false;
-    } else {
-      setSuccess(fullName);
-    }
+    } else setSuccess(fullName);
 
     if (!isValidEmail(email.value.trim())) {
       setError(email, "Please enter a valid email address");
       isValid = false;
-    } else {
-      setSuccess(email);
-    }
+    } else setSuccess(email);
 
     if (password.value.length < 8) {
       setError(password, "Password must be at least 8 characters");
       isValid = false;
-    } else {
-      setSuccess(password);
-    }
+    } else setSuccess(password);
 
     if (confirmPassword.value !== password.value || confirmPassword.value === "") {
       setError(confirmPassword, "Passwords do not match");
       isValid = false;
-    } else {
-      setSuccess(confirmPassword);
-    }
+    } else setSuccess(confirmPassword);
 
     if (userType.value === "") {
       setError(userType, "Please select your role");
       isValid = false;
-    } else {
-      setSuccess(userType);
-    }
+    } else setSuccess(userType);
 
     if (!terms.checked) {
       alert("You must agree to the Terms of Service and Privacy Policy");
       isValid = false;
     }
 
-    if (isValid) {
-      try {
-        const res = await fetch(`${API_BASE}/signup`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email: email.value.trim(),
-            password: password.value,
-            role: userType.value,
-            name: fullName.value.trim(),
-          }),
-        });
+    if (!isValid) return;
 
-        const data = await res.json();
+    try {
+      const res = await fetch(`${API_BASE}/signup`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: email.value.trim(),
+          password: password.value,
+          role: userType.value,
+          name: fullName.value.trim(),
+        }),
+      });
 
-        if (!res.ok) {
-          throw new Error(data.error || "Signup failed");
-        }
+      const data = await res.json();
 
-        alert("Signup successful! Redirecting to login...");
-        window.location.href = "login.html";
-      } catch (err) {
-        alert(`Signup error: ${err.message}`);
-      }
+      if (!res.ok) throw new Error(data.error || "Signup failed");
+
+      alert("Signup successful! Redirecting to login...");
+      window.location.href = "login.html";
+    } catch (err) {
+      alert(`Signup error: ${err.message}`);
     }
   });
 });
