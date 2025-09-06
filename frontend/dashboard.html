@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduHub - Educational Platform</title>
+    <link rel="stylesheet" href="./css/dashboard.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-content">
+                <div class="logo">H a c t i c</div>
+                <ul class="nav-links">
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('courses')">Courses</a></li>
+                    <li><a href="#" onclick="showPage('reviews')">Reviews</a></li>
+                    <li><a href="#" onclick="showPage('about')">About</a></li>
+                </ul>
+                <div class="auth-buttons">
+                    <a href="#" class="btn" onclick="showPage('login')">Login</a>
+                    <a href="#" class="btn btn-primary" onclick="showPage('signup')">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Page -->
+        <div id="home" class="page active">
+            <section class="hero">
+                <div class="container">
+                    <h1>Learn Without Limits</h1>
+                    <p>Connect with expert teachers, explore diverse courses, and advance your knowledge in a streamlined educational platform designed for modern learning.</p>
+                    <div class="hero-buttons">
+                        <a href="#" class="btn btn-primary" onclick="showPage('signup')">Get Started</a>
+                        <a href="#" class="btn" onclick="showPage('courses')">Browse Courses</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="features">
+                <div class="container">
+                    <h2>Why Choose EduHub?</h2>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">📚</div>
+                            <h3>Expert Teachers</h3>
+                            <p>Learn from qualified instructors with real-world experience in their fields.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🎯</div>
+                            <h3>Structured Courses</h3>
+                            <p>Well-organized curriculum designed to take you from beginner to advanced levels.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⭐</div>
+                            <h3>Student Reviews</h3>
+                            <p>Make informed decisions with honest feedback from fellow students.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">📱</div>
+                            <h3>Easy Access</h3>
+                            <p>Study anywhere, anytime with our user-friendly platform.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Login Page -->
+        <div id="login" class="page">
+            <div class="container">
+                <div class="form-container">
+                    <h2 style="text-align: center; margin-bottom: 2rem;">Welcome Back</h2>
+                    <form>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" placeholder="Enter your password">
+                        </div>
+                        <div class="form-group">
+                            <label>Login as</label>
+                            <select>
+                                <option>Student</option>
+                                <option>Teacher</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="showPage('dashboard')">Login</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 1rem; color: #999;">
+                        Don't have an account? <a href="#" onclick="showPage('signup')" style="color: #fff;">Sign up</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sign Up Page -->
+        <div id="signup" class="page">
+            <div class="container">
+                <div class="form-container">
+                    <h2 style="text-align: center; margin-bottom: 2rem;">Create Account</h2>
+                    <form>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" placeholder="Create a password">
+                        </div>
+                        <div class="form-group">
+                            <label>I am a</label>
+                            <select>
+                                <option>Student</option>
+                                <option>Teacher</option>
+                            </select>
+                        </div>
+                        <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" onclick="showPage('dashboard')">Sign Up</button>
+                    </form>
+                    <p style="text-align: center; margin-top: 1rem; color: #999;">
+                        Already have an account? <a href="#" onclick="showPage('login')" style="color: #fff;">Login</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard -->
+        <div id="dashboard" class="page">
+            <div class="dashboard">
+                <aside class="sidebar">
+                    <ul>
+                        <li><a href="#" class="active" onclick="showDashboardSection('overview')">Overview</a></li>
+                        <li><a href="#" onclick="showDashboardSection('courses')">My Courses</a></li>
+                        <li><a href="#" onclick="showDashboardSection('create-course')">Create Course</a></li>
+                        <li><a href="#" onclick="showDashboardSection('reviews')">Reviews</a></li>
+                        <li><a href="#" onclick="showDashboardSection('profile')">Profile</a></li>
+                        <li><a href="#" onclick="showPage('home')">Logout</a></li>
+                    </ul>
+                </aside>
+
+                <main class="dashboard-content">
+                    <!-- Overview Section -->
+                    <div id="overview" class="dashboard-section active">
+                        <h2>Dashboard Overview</h2>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">12</div>
+                                <div class="stat-label">Enrolled Courses</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">3</div>
+                                <div class="stat-label">Created Courses</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">4.8</div>
+                                <div class="stat-label">Average Rating</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">156</div>
+                                <div class="stat-label">Total Students</div>
+                            </div>
+                        </div>
+                        
+                        <h3 style="margin: 2rem 0 1rem;">Recent Activity</h3>
+                        <div class="review-card">
+                            <div class="review-header">
+                                <span class="review-author">New enrollment in "Web Development"</span>
+                                <span class="review-date">2 hours ago</span>
+                            </div>
+                        </div>
+                        <div class="review-card">
+                            <div class="review-header">
+                                <span class="review-author">New review received</span>
+                                <span class="review-date">1 day ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- My Courses Section -->
+                    <div id="courses-section" class="dashboard-section">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                            <h2>My Courses</h2>
+                            <button class="btn btn-primary" onclick="showDashboardSection('create-course')">Create New Course</button>
+                        </div>
+                        <div class="courses-grid">
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div class="course-title">JavaScript Fundamentals</div>
+                                    <div class="course-instructor">by John Doe</div>
+                                </div>
+                                <div class="course-body">
+                                    <div class="course-meta">
+                                        <span>24 Students</span>
+                                        <div class="rating">
+                                            <span class="stars">★★★★★</span>
+                                            <span>4.9</span>
+                                        </div>
+                                    </div>
+                                    <p>Learn the basics of JavaScript programming language with hands-on projects.</p>
+                                    <button class="btn" style="margin-top: 1rem; width: 100%;">Manage Course</button>
+                                </div>
+                            </div>
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div class="course-title">React Development</div>
+                                    <div class="course-instructor">by Jane Smith</div>
+                                </div>
+                                <div class="course-body">
+                                    <div class="course-meta">
+                                        <span>18 Students</span>
+                                        <div class="rating">
+                                            <span class="stars">★★★★☆</span>
+                                            <span>4.7</span>
+                                        </div>
+                                    </div>
+                                    <p>Master React.js and build modern web applications from scratch.</p>
+                                    <button class="btn" style="margin-top: 1rem; width: 100%;">Manage Course</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Create Course Section -->
+                    <div id="create-course" class="dashboard-section">
+                        <h2>Create New Course</h2>
+                        <form style="max-width: 600px;">
+                            <div class="form-group">
+                                <label>Course Title</label>
+                                <input type="text" placeholder="Enter course title">
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea rows="4" placeholder="Describe your course"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                <select>
+                                    <option>Programming</option>
+                                    <option>Design</option>
+                                    <option>Business</option>
+                                    <option>Marketing</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Difficulty Level</label>
+                                <select>
+                                    <option>Beginner</option>
+                                    <option>Intermediate</option>
+                                    <option>Advanced</option>
+                                </select>
+                            </div>
+                            <button type="button" class="btn btn-primary">Create Course</button>
+                        </form>
+                    </div>
+
+                    <!-- Reviews Section -->
+                    <div id="reviews-section" class="dashboard-section">
+                        <h2>Course Reviews</h2>
+                        <div class="review-card">
+                            <div class="review-header">
+                                <span class="review-author">Sarah Johnson</span>
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span class="review-date">3 days ago</span>
+                                </div>
+                            </div>
+                            <p>"Excellent course! The instructor explains complex concepts in a very clear way. Highly recommended for beginners."</p>
+                        </div>
+                        <div class="review-card">
+                            <div class="review-header">
+                                <span class="review-author">Mike Chen</span>
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span class="review-date">1 week ago</span>
+                                </div>
+                            </div>
+                            <p>"Good content and well-structured lessons. Could use more practical examples, but overall very helpful."</p>
+                        </div>
+                    </div>
+
+                    <!-- Profile Section -->
+                    <div id="profile-section" class="dashboard-section">
+                        <h2>Profile Settings</h2>
+                        <form style="max-width: 600px;">
+                            <div class="form-group">
+                                <label>Full Name</label>
+                                <input type="text" value="John Doe">
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" value="john.doe@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label>Bio</label>
+                                <textarea rows="4" placeholder="Tell us about yourself"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Specialization</label>
+                                <input type="text" placeholder="Your area of expertise">
+                            </div>
+                            <button type="button" class="btn btn-primary">Update Profile</button>
+                        </form>
+                    </div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Courses Page -->
+        <div id="courses" class="page">
+            <div class="container" style="padding: 4rem 20px;">
+                <h2 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">Available Courses</h2>
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-title">Web Development Bootcamp</div>
+                            <div class="course-instructor">by Alex Rivera</div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-meta">
+                                <span>45 Students</span>
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                            <p>Complete web development course covering HTML, CSS, JavaScript, and modern frameworks.</p>
+                            <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Enroll Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-title">Python for Data Science</div>
+                            <div class="course-instructor">by Dr. Emily Chen</div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-meta">
+                                <span>32 Students</span>
+                                <div class="rating">
+                                    <span class="stars">★★★★★</span>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <p>Learn Python programming with focus on data analysis, visualization, and machine learning.</p>
+                            <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Enroll Now</button>
+                        </div>
+                    </div>
+                    <div class="course-card">
+                        <div class="course-header">
+                            <div class="course-title">Digital Marketing Master Class</div>
+                            <div class="course-instructor">by Mark Thompson</div>
+                        </div>
+                        <div class="course-body">
+                            <div class="course-meta">
+                                <span>67 Students</span>
+                                <div class="rating">
+                                    <span class="stars">★★★★☆</span>
+                                    <span>4.6</span>
+                                </div>
+                            </div>
+                            <p>Master digital marketing strategies including SEO, social media, and content marketing.</p>
+                            <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;">Enroll Now</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews Page -->
+        <div id="reviews" class="page">
+            <div class="container" style="padding: 4rem 20px;">
+                <h2 style="text-align: center; font-size: 2rem; margin-bottom: 3rem;">Student Reviews</h2>
+                <div style="max-width: 800px; margin: 0 auto;">
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="review-author">Lisa Wang</span>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="review-date">2 days ago</span>
+                            </div>
+                        </div>
+                        <p><strong>Web Development Bootcamp</strong></p>
+                        <p>"Amazing course! I went from knowing nothing about web development to building my own websites. The instructor is very knowledgeable and patient."</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="review-author">David Kim</span>
+                            <div class="rating">
+                                <span class="stars">★★★★★</span>
+                                <span class="review-date">1 week ago</span>
+                            </div>
+                        </div>
+                        <p><strong>Python for Data Science</strong></p>
+                        <p>"Excellent course with practical examples. The projects really helped me understand the concepts better. Highly recommend!"</p>
+                    </div>
+                    <div class="review-card">
+                        <div class="review-header">
+                            <span class="review-author">Rachel Green</span>
+                            <div class="rating">
+                                <span class="stars">★★★★☆</span>
+                                <span class="review-date">2 weeks ago</span>
+                            </div>
+                        </div>
+                        <p><strong>Digital Marketing Master Class</strong></p>
+                        <p>"Great content and very informative. Could use more interactive elements, but overall a solid course for learning digital marketing."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Page -->
+        <div id="about" class="page">
+            <div class="container" style="padding: 4rem 20px;">
+                <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                    <h2 style="font-size: 2rem; margin-bottom: 2rem;">About EduHub</h2>
+                    <p style="font-size: 1.1rem; color: #999; margin-bottom: 3rem;">
+                        EduHub is a modern educational platform designed to connect passionate teachers with eager students. 
+                        We believe in making quality education accessible to everyone, anywhere, anytime.
+                    </p>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <h3>Our Mission</h3>
+                            <p>To democratize education by providing a platform where knowledge flows freely between educators and learners.</p>
+                        </div>
+                        <div class="feature-card">
+                            <h3>Our Vision</h3>
+                            <p>A world where geographical and economic barriers don't limit access to quality education.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
