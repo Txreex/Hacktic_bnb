@@ -4,7 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Courses - H e c k t i c</title>
-  <link rel="stylesheet" href="./css/dashboard.css" />
+  <link rel="stylesheet" href="./css/course.css" />
+  <link rel="stylesheet" href="./css/dashboard.css">
 </head>
 <body>
   <!-- Navigation -->
@@ -26,9 +27,9 @@
   <main class="main-content">
     <div class="container">
       <!-- Page Title -->
-      <header style="text-align:center; margin-bottom:2rem;">
+      <header class="page-header">
         <h2>Browse Our Courses</h2>
-        <p style="color:#999; font-size:0.95rem;">
+        <p>
           Explore a wide range of structured and interactive courses.
         </p>
       </header>
@@ -45,7 +46,27 @@
 
       <!-- Course Results -->
       <div id="courseResults" class="courses-grid">
-        <!-- Sample Course Cards -->
+        <!-- Sample Course Card -->
+        <div class="course-card">
+          <div class="course-info">
+            <h3 class="course-title">Introduction to Web Development</h3>
+            <p class="course-instructor">By John Doe</p>
+            <p class="course-description">
+              Learn the basics of HTML, CSS, and JavaScript to build your first website.
+            </p>
+            <button class="course-btn">View Course</button>
+          </div>
+        </div>
+
+        <div class="course-card">
+          <div class="course-info">
+            <h3 class="course-title">Python for Beginners</h3>
+            <p class="course-instructor">By Jane Smith</p>
+            <p class="course-description">
+              Start coding in Python with step-by-step lessons and projects.
+            </p>
+            <button class="course-btn">View Course</button>
+          </div>
         </div>
       </div>
     </div>
