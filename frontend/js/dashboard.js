@@ -170,3 +170,38 @@ searchInput.addEventListener("input", async () => {
         searchResults.innerHTML = `<p style="color:red;">Failed to load courses.</p>`;
     }
 });
+
+
+// Retrieve user data from localStorage or sessionStorage
+const storedData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
+
+if (storedData) {
+    const user = JSON.parse(storedData);
+    const userId = user.id;
+    console.log("Current user ID: ", userId);
+
+    // Now you can use userId in API requests or for page personalization
+    // Example: fetch user-specific courses
+    fetch(`http://localhost:3000/api/user-courses?userId=${userId}`)
+        .then(res => res.json())
+        .then(data => console.log(data));
+} else {
+    console.log("User not logged in");
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const userMenu = document.getElementById('userMenu');
+  const profileDropdown = document.getElementById('profileDropdown');
+
+  // Toggle dropdown on click
+  userMenu.addEventListener('click', (e) => {
+    e.stopPropagation();
+    profileDropdown.style.display =
+      profileDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+    profileDropdown.style.display = 'none';
+  });
+});

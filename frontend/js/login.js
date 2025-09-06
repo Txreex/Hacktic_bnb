@@ -193,3 +193,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const userData = localStorage.getItem('userData') || sessionStorage.getItem('userData');
     if (userData) console.log('User already logged in');
 });
+
+const userData = {
+    email: data.user.email,
+    id: data.user.id,
+    role: data.user.user_metadata.role,
+    session: data.session
+};
+
+if (remember) {
+    localStorage.setItem('userData', JSON.stringify(userData));
+} else {
+    sessionStorage.setItem('userData', JSON.stringify(userData));
+}

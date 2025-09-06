@@ -20,12 +20,15 @@
           </ul>
           <!-- Dynamic Auth / User Menu -->
           <div id="userMenu" class="auth-buttons">
-            Profile
+            Profile ▾
+            <div id="profileDropdown" class="dropdown">
+              <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+              <a href="#" onclick="logoutUser()">Logout</a>
+            </div>
           </div>
         </div>
       </div>
     </nav>
-
 
     <!-- Main Content -->
     <main class="main-content">
@@ -43,8 +46,9 @@
               <a href="#" class="btn btn-primary" onclick="showPage('signup')"
                 >Get Started</a
               >
-              <a href="./course.html" class="btn" id="browseBtn">Browse Courses</a>
-
+              <a href="./course.html" class="btn" id="browseBtn"
+                >Browse Courses</a
+              >
             </div>
           </div>
         </section>
@@ -241,4 +245,5 @@
     <script type="module" src="js/dashboardAuth.js"></script>
     <script src="js/script.js"></script>
   </body>
-</html>a
+</html>
+a

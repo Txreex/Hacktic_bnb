@@ -411,3 +411,33 @@ h3 {
   box-shadow: 0 2px 6px rgba(0,0,0,0.2);
 }
 
+/* Dropdown menu styling */
+.auth-buttons {
+  position: relative;
+  cursor: pointer;
+  color: #fff;
+}
+
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #1f1f1f;
+  border: 1px solid #333;
+  border-radius: 5px;
+  min-width: 150px;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 15px;
+  text-decoration: none;
+  color: #fff;
+}
+
+.dropdown a:hover {
+  background-color: #333;
+}
