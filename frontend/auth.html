@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login / Signup</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      width: 350px;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      width: 48%;
+      padding: 10px;
+      margin: 10px 1%;
+      border: none;
+      border-radius: 6px;
+      background: #4a90e2;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #357ABD;
+    }
+    #message {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 14px;
+    }
+    #logout {
+      margin-top: 15px;
+      width: 100%;
+      background: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <!-- Login / Signup Container -->
+  <div class="container" id="auth-container">
+    <h2>Login / Signup</h2>
+    <input type="email" id="email" placeholder="Email" />
+    <input type="password" id="password" placeholder="Password" />
+    <div>
+      <button id="loginBtn">Login</button>
+      <button id="signupBtn">Sign Up</button>
+    </div>
+    <p id="message"></p>
+  </div>
+
+  <!-- Welcome Container -->
+  <div class="container" id="welcome-container" style="display:none;">
+    <h2 id="welcome-msg"></h2>
+    <button id="logout">Logout</button>
+  </div>
+
+  <!-- Supabase and Auth JS -->
+  <script src="https://unpkg.com/@supabase/supabase-js@2" defer></script>
+  <script src="./js/auth.js" defer></script>
+</body>
+</html>
