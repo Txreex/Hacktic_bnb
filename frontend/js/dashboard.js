@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 // --------------------------
 // USER NAVBAR
 // --------------------------
@@ -136,7 +136,6 @@ showPage("home"); // default
 window.showPage = showPage;
 window.logoutUser = logoutUser;
 window.searchCourses = searchCourses;
-=======
 const searchInput = document.getElementById("courseSearch");
 const searchResults = document.getElementById("searchResults");
 
@@ -171,4 +170,3 @@ searchInput.addEventListener("input", async () => {
         searchResults.innerHTML = `<p style="color:red;">Failed to load courses.</p>`;
     }
 });
->>>>>>> ada4229e7f5ed900a041bdcaaf6da5b15ba024ce
